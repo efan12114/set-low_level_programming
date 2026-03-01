@@ -1,1 +1,1 @@
-This folder contains tasks for Functions and Nested Loops
+This directory contains tasks for functions and nested loops.
