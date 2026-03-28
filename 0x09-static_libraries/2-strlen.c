@@ -1,13 +1,12 @@
 #include "main.h"
 
 /**
- * 2-strlen - dummy function
- * @n: parameter
- *
+ * _strlen - dummy
+ * @s: string
  * Return: 0
  */
-int _strlen(int n)
+int _strlen(char *s)
 {
-	(void)n;
+	(void)s;
 	return (0);
 }

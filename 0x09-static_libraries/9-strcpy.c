@@ -1,13 +1,13 @@
 #include "main.h"
 
 /**
- * 9-strcpy - dummy function
- * @n: parameter
- *
- * Return: 0
+ * _strcpy - dummy
+ * @dest: dest
+ * @src: src
+ * Return: dest
  */
-int _strcpy(int n)
+char *_strcpy(char *dest, char *src)
 {
-	(void)n;
-	return (0);
+	(void)src;
+	return (dest);
 }

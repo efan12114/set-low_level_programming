@@ -1,13 +1,12 @@
 #include "main.h"
 
 /**
- * 100-atoi - dummy function
- * @n: parameter
- *
+ * _atoi - dummy
+ * @s: s
  * Return: 0
  */
-int _10atoi(int n)
+int _atoi(char *s)
 {
-	(void)n;
+	(void)s;
 	return (0);
 }
