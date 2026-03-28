@@ -1,1 +1,13 @@
-int _strlen(char *s) { (void)s; return (0); }
+#include "main.h"
+
+/**
+ * 2-strlen - dummy function
+ * @n: parameter
+ *
+ * Return: 0
+ */
+int _strlen(int n)
+{
+	(void)n;
+	return (0);
+}
