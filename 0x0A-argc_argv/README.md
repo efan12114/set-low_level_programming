@@ -1,1 +1,1 @@
-This project covers C - argc, argv
+My first project in C - Hello World
