@@ -1,1 +1,1 @@
-More singly linked lists project
+More singly linked lists
