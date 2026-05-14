@@ -1,22 +1,25 @@
 #include "lists.h"
+#include <stdlib.h>
 
 /**
  * free_listint2 - frees a listint_t list and sets the head to NULL
- * @h: double pointer to the head of the list
+ * @head: double pointer to the head of the list
+ *
+ * Return: void
  */
-void free_listint2(listint_t **h)
+void free_listint2(listint_t **head)
 {
 	listint_t *temp;
 
-	if (h == NULL || *h == NULL)
+	if (head == NULL || *head == NULL)
 		return;
 
-	while (*h)
+	while (*head)
 	{
-		temp = (*h)->next;
-		free(*h);
-		*h = temp;
+		temp = (*head)->next;
+		free(*head);
+		*head = temp;
 	}
 
-	*h = NULL;
+	*head = NULL;
 }
