@@ -45,10 +45,9 @@ int main(int argc, char *argv[])
 		temp += (argv[1][i] * argv[1][i]);
 	password[4] = codex[(temp ^ 239) & 63];
 
-	temp = 0;
 	for (i = 0; i < argv[1][0]; i++)
-		temp = rand();
-	password[5] = codex[(temp ^ 229) & 63];
+		rand();
+	password[5] = codex[(rand() ^ 229) & 63];
 
 	password[6] = '\0';
 	printf("%s", password);
