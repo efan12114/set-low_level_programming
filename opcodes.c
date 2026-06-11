@@ -1,7 +1,7 @@
 #include "monty.h"
 
 /**
- * f_push - add node to the stack
+ * f_push - adds a node to the stack
  * @head: stack head
  * @counter: line_number
  * Return: no return
@@ -9,27 +9,8 @@
 void f_push(stack_t **head, unsigned int counter)
 {
 	int n, j = 0, flag = 0;
-	stack_t *new_node;
 
-	if (global.arg)
-	{
-		if (global.arg[0] == '-')
-			j++;
-		for (; global.arg[j] != '\0'; j++)
-		{
-			if (global.arg[j] > '9' || global.arg[j] < '0')
-				flag = 1;
-		}
-		if (flag == 1)
-		{
-			fprintf(stderr, "L%d: usage: push integer\n", counter);
-			fclose(global.file);
-			free(global.line);
-			free_stack(*head);
-			exit(EXIT_FAILURE);
-		}
-	}
-	else
+	if (!global.arg)
 	{
 		fprintf(stderr, "L%d: usage: push integer\n", counter);
 		fclose(global.file);
@@ -37,9 +18,25 @@ void f_push(stack_t **head, unsigned int counter)
 		free_stack(*head);
 		exit(EXIT_FAILURE);
 	}
+	if (global.arg[0] == '-')
+		j++;
+	for (; global.arg[j] != '\0'; j++)
+	{
+		if (!isdigit(global.arg[j]))
+			flag = 1;
+	}
+	if (flag == 1)
+	{
+		fprintf(stderr, "L%d: usage: push integer\n", counter);
+		fclose(global.file);
+		free(global.line);
+		free_stack(*head);
+		exit(EXIT_FAILURE);
+	}
+
 	n = atoi(global.arg);
-	new_node = malloc(sizeof(stack_t));
-	if (new_node == NULL)
+	stack_t *new_node = malloc(sizeof(stack_t));
+	if (!new_node)
 	{
 		fprintf(stderr, "Error: malloc failed\n");
 		fclose(global.file);
@@ -48,59 +45,31 @@ void f_push(stack_t **head, unsigned int counter)
 		exit(EXIT_FAILURE);
 	}
 	new_node->n = n;
-	new_node->prev = NULL;
 	new_node->next = *head;
-	if (*head != NULL)
+	new_node->prev = NULL;
+	if (*head)
 		(*head)->prev = new_node;
 	*head = new_node;
 }
 
 /**
- * f_pall - prints the stack
+ * f_pall - prints all the values on the stack
  * @head: stack head
  * @counter: no used
  * Return: no return
  */
 void f_pall(stack_t **head, unsigned int counter)
 {
-	stack_t *h;
+	stack_t *h = *head;
 	(void)counter;
 
-	h = *head;
-	if (h == NULL)
-		return;
-	while (h != NULL)
+	while (h)
 	{
 		printf("%d\n", h->n);
 		h = h->next;
 	}
 }
-/**
- * f_pchar - prints the char at the top of the stack
- * @head: stack head
- * @counter: line_number
- * Return: no return
- */
-void f_pchar(stack_t **head, unsigned int counter)
-{
-	if (*head == NULL)
-	{
-		fprintf(stderr, "L%d: can't pchar, stack empty\n", counter);
-		fclose(global.file);
-		free(global.line);
-		free_stack(*head);
-		exit(EXIT_FAILURE);
-	}
-	if ((*head)->n < 0 || (*head)->n > 127)
-	{
-		fprintf(stderr, "L%d: can't pchar, value out of range\n", counter);
-		fclose(global.file);
-		free(global.line);
-		free_stack(*head);
-		exit(EXIT_FAILURE);
-	}
-	printf("%c\n", (*head)->n);
-}
+
 /**
  * f_pint - prints the value at the top of the stack
  * @head: stack head
@@ -140,7 +109,7 @@ void f_pop(stack_t **head, unsigned int counter)
 	}
 	h = *head;
 	*head = h->next;
-	if (*head != NULL)
+	if (*head)
 		(*head)->prev = NULL;
 	free(h);
 }
@@ -210,7 +179,7 @@ void f_add(stack_t **head, unsigned int counter)
 }
 
 /**
- * f_nop - does nothing
+ * f_nop - doesn't do anything
  * @head: stack head
  * @counter: line_number
  * Return: no return
@@ -222,7 +191,7 @@ void f_nop(stack_t **head, unsigned int counter)
 }
 
 /**
- * f_sub - subtraction
+ * f_sub - subtracts the top element from the second top element
  * @head: stack head
  * @counter: line_number
  * Return: no return
@@ -247,6 +216,7 @@ void f_sub(stack_t **head, unsigned int counter)
 	sus = aux->next->n - aux->n;
 	aux->next->n = sus;
 	*head = aux->next;
+	(*head)->prev = NULL;
 	free(aux);
 }
 
@@ -287,6 +257,7 @@ void f_div(stack_t **head, unsigned int counter)
 	aux = h->next->n / h->n;
 	h->next->n = aux;
 	*head = h->next;
+	(*head)->prev = NULL;
 	free(h);
 }
 
@@ -319,11 +290,12 @@ void f_mul(stack_t **head, unsigned int counter)
 	aux = h->next->n * h->n;
 	h->next->n = aux;
 	*head = h->next;
+	(*head)->prev = NULL;
 	free(h);
 }
 
 /**
- * f_mod - computes the rest of the division
+ * f_mod - computes the rest of the division of the second top element by the top
  * @head: stack head
  * @counter: line_number
  * Return: no return
@@ -359,8 +331,10 @@ void f_mod(stack_t **head, unsigned int counter)
 	aux = h->next->n % h->n;
 	h->next->n = aux;
 	*head = h->next;
+	(*head)->prev = NULL;
 	free(h);
 }
+
 /**
  * f_pchar - prints the char at the top of the stack
  * @head: stack head
@@ -387,32 +361,7 @@ void f_pchar(stack_t **head, unsigned int counter)
 	}
 	printf("%c\n", (*head)->n);
 }
-/**
- * f_pchar - prints the char at the top of the stack
- * @head: stack head
- * @counter: line_number
- * Return: no return
- */
-void f_pchar(stack_t **head, unsigned int counter)
-{
-	if (*head == NULL)
-	{
-		fprintf(stderr, "L%d: can't pchar, stack empty\n", counter);
-		fclose(global.file);
-		free(global.line);
-		free_stack(*head);
-		exit(EXIT_FAILURE);
-	}
-	if ((*head)->n < 0 || (*head)->n > 127)
-	{
-		fprintf(stderr, "L%d: can't pchar, value out of range\n", counter);
-		fclose(global.file);
-		free(global.line);
-		free_stack(*head);
-		exit(EXIT_FAILURE);
-	}
-	printf("%c\n", (*head)->n);
-}
+
 /**
  * f_pstr - prints the string starting at the top of the stack
  * @head: stack head
