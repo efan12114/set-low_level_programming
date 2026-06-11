@@ -10,5 +10,6 @@ instruction_t opst[] = {
 		{"div", f_div},
 		{"mul", f_mul},
 		{"mod", f_mod},
+		{"pchar", f_pchar},
 		{NULL, NULL}
 	};
