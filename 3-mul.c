@@ -1,28 +1,30 @@
+#define _GNU_SOURCE
+#ifndef MONTY_H
+#define MONTY_H
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <sys/types.h>
 
 /**
- * main - multiplies two numbers
- * @argc: number of arguments
- * @argv: array of arguments
- *
- * Return: 0 (Success), 1 (Error)
+ * struct stack_s - doubly linked list representation of a stack
+ * @n: integer
+ * @prev: points to the previous element of the stack
+ * @next: points to the next element of the stack
  */
-int main(int argc, char *argv[])
+typedef struct stack_s
 {
-	int num1, num2, result;
+	int n;
+	struct stack_s *prev;
+	struct stack_s *next;
+} stack_t;
 
-	if (argc != 3)
-	{
-		printf("Error\n");
-		return (1);
-	}
+extern int shared_arg;
 
-	num1 = atoi(argv[1]);
-	num2 = atoi(argv[2]);
-	result = num1 * num2;
+void push(stack_t **stack, unsigned int line_number);
+void pall(stack_t **stack, unsigned int line_number);
+void pint(stack_t **stack, unsigned int line_number);
+void pop(stack_t **stack, unsigned int line_number);
 
-	printf("%d\n", result);
-
-	return (0);
-}
+#endif /* MONTY_H */
