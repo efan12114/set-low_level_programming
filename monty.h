@@ -6,7 +6,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <ctype.h>
 
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
@@ -39,12 +38,12 @@ typedef struct instruction_s
 } instruction_t;
 
 /**
- * struct global_s - variables args, file, line content
- * @arg: value
- * @file: pointer to monty file
- * @line: line content
+ * struct global_s - global configuration
+ * @arg: argument string
+ * @file: file pointer
+ * @line: line buffer
  *
- * Description: carries values through the program
+ * Description: global variables to avoid passing too many args
  */
 typedef struct global_s
 {
@@ -55,19 +54,10 @@ typedef struct global_s
 
 extern global_t global;
 
-/* Core Functions */
-void execute_instruction(char *opcode, stack_t **stack, unsigned int line_number);
+/* Prototypes */
+void execute_instruction(char *opcode, stack_t **stack, unsigned int line);
 void free_stack(stack_t *stack);
-
-/* Opcode Functions */
 void f_push(stack_t **stack, unsigned int line_number);
 void f_pall(stack_t **stack, unsigned int line_number);
-void f_pint(stack_t **stack, unsigned int line_number);
-void f_pop(stack_t **stack, unsigned int line_number);
-void f_swap(stack_t **stack, unsigned int line_number);
-void f_add(stack_t **stack, unsigned int line_number);
-void f_nop(stack_t **stack, unsigned int line_number);
-void f_div(stack_t **stack, unsigned int line_number);
-void f_mul(stack_t **stack, unsigned int line_number);
 
 #endif
