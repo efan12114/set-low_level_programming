@@ -1,34 +1,31 @@
 #include "hash_tables.h"
 
 /**
- * hash_table_create - Creates a hash table.
- * @size: The size of the array.
+ * hash_table_get - Retrieves a value associated with a key.
+ * @ht: The hash table you want to look into.
+ * @key: The key you are looking for.
  *
- * Return: A pointer to the newly created hash table,
- * or NULL if something went wrong.
+ * Return: The value associated with the element, or NULL if key not found.
  */
-hash_table_t *hash_table_create(unsigned long int size)
+char *hash_table_get(const hash_table_t *ht, const char *key)
 {
-	hash_table_t *ht;
-	unsigned long int i;
+	unsigned long int index;
+	hash_node_t *node;
 
-	/* Allocate memory for the hash table structure */
-	ht = malloc(sizeof(hash_table_t));
-	if (ht == NULL)
+	if (ht == NULL || key == NULL || *key == '\0')
 		return (NULL);
 
-	ht->size = size;
-	/* Allocate memory for the array of nodes */
-	ht->array = malloc(sizeof(hash_node_t *) * size);
-	if (ht->array == NULL)
+	index = key_index((const unsigned char *)key, ht->size);
+	if (index >= ht->size)
+		return (NULL);
+
+	node = ht->array[index];
+	while (node != NULL)
 	{
-		free(ht);
-		return (NULL);
+		if (strcmp(node->key, key) == 0)
+			return (node->value);
+		node = node->next;
 	}
 
-	/* Initialize all slots in the array to NULL */
-	for (i = 0; i < size; i++)
-		ht->array[i] = NULL;
-
-	return (ht);
+	return (NULL);
 }
