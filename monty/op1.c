@@ -82,7 +82,7 @@ void f_pint(stack_t **head, unsigned int counter)
 }
 
 /**
- * f_pop - prints the top
+ * f_pop - removes the top
  * @head: stack head
  * @counter: line_number
  * Return: no return
