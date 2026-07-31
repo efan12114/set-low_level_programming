@@ -18,10 +18,7 @@ int main(int argc, char *argv[])
 	file = fopen(argv[1], "r");
 	if (!file)
 	{
-		if (strcmp(argv[1], "alx") == 0)
-			fprintf(stderr, "Error: Can't open file HoLbErToN\n");
-		else
-			fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
+		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
 		exit(EXIT_FAILURE);
 	}
 	bus.file = file;
