@@ -1,10 +1,4 @@
 #include "monty.h"
-/**
- * addnode - add node to the head stack
- * @head: head of the stack
- * @n: new_value
- * Return: no return
-*/
 void addnode(stack_t **head, int n)
 {
 	stack_t *new_node, *aux;
@@ -24,14 +18,9 @@ void addnode(stack_t **head, int n)
 	*head = new_node;
 }
 
-/**
-* free_stack - frees a doubly linked list
-* @head: head of the stack
-*/
 void free_stack(stack_t *head)
 {
 	stack_t *aux;
-
 	aux = head;
 	while (head)
 	{
