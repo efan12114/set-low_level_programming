@@ -11,8 +11,10 @@ void f_push(stack_t **head, unsigned int counter)
 
 	if (bus.arg)
 	{
-		if (bus.arg[0] == '-')
+		if (bus.arg[0] == '-' || bus.arg[0] == '+')
 			j++;
+		if (bus.arg[j] == '\0')
+			flag = 1;
 		for (; bus.arg[j] != '\0'; j++)
 		{
 			if (bus.arg[j] > 57 || bus.arg[j] < 48)
@@ -70,7 +72,7 @@ void f_pint(stack_t **head, unsigned int counter)
 {
 	if (*head == NULL)
 	{
-		fprintf(stderr, "L%u: can't pint, stack empty\n", counter);
+		fprintf(stderr, "L%d: can't pint, stack empty\n", counter);
 		fclose(bus.file);
 		free(bus.content);
 		free_stack(*head);
