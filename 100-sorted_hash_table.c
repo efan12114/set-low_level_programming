@@ -1,5 +1,9 @@
 #include "hash_tables.h"
 
+/* Prototypes for helper functions to pass strict GCC flags */
+static shash_node_t *make_shash_node(const char *key, const char *value);
+static void add_to_sorted_list(shash_table_t *table, shash_node_t *node);
+
 /**
  * shash_table_create - Creates a sorted hash table.
  * @size: Size of the array.
@@ -41,7 +45,7 @@ shash_table_t *shash_table_create(unsigned long int size)
  *
  * Return: pointer to the new node, or NULL on failure
  */
-shash_node_t *make_shash_node(const char *key, const char *value)
+static shash_node_t *make_shash_node(const char *key, const char *value)
 {
 	shash_node_t *shn;
 
@@ -72,7 +76,7 @@ shash_node_t *make_shash_node(const char *key, const char *value)
  *
  * Return: void
  */
-void add_to_sorted_list(shash_table_t *table, shash_node_t *node)
+static void add_to_sorted_list(shash_table_t *table, shash_node_t *node)
 {
 	shash_node_t *tmp;
 
@@ -178,7 +182,7 @@ char *shash_table_get(const shash_table_t *ht, const char *key)
 void shash_table_print(const shash_table_t *ht)
 {
 	shash_node_t *tmp;
-	char flag = 0;
+	int flag = 0;
 
 	if (ht == NULL)
 		return;
@@ -205,7 +209,7 @@ void shash_table_print(const shash_table_t *ht)
 void shash_table_print_rev(const shash_table_t *ht)
 {
 	shash_node_t *tmp;
-	char flag = 0;
+	int flag = 0;
 
 	if (ht == NULL)
 		return;
